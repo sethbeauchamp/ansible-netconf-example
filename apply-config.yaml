@@ -1,0 +1,10 @@
+---
+  - hosts: MPLS-SERVICE
+    connection: netconf
+    tasks:
+      - name: Deploy Customer Configuration
+        netconf_config:
+         target: candidate
+         commit: yes
+         lock: always
+         content: "{{ lookup('file', './pe-config.xml') }}"

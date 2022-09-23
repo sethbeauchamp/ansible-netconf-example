@@ -1,0 +1,7 @@
+[MPLS-SERVICE]
+PE1 ansible_host=172.16.172.25
+PE2 ansible_host=172.16.172.26
+
+[MPLS-SERVICE:vars]
+ansible_user=cisco
+ansible_password=cisco

@@ -1,0 +1,20 @@
+---
+    - hosts: MPLS-SERVICE
+      connection: netconf
+      tasks:
+        - name: Get Config
+          netconf_get:
+            source: running
+            filter: |
+                <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                       <interface>
+                        <GigabitEthernet>
+                         <name>3</name>
+                        </GigabitEthernet>
+                       </interface>
+                      </native>
+          register: config
+        -  name: Write Config To File
+           copy: 
+            content: "{{ config['stdout'] }}" 
+            dest: ./configs/{{ inventory_hostname }}-Interface-config.xml

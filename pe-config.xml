@@ -1,0 +1,69 @@
+<config>
+    <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <vrf>
+            <definition>
+                <name>SethCo</name>
+                <rd>25:100</rd>
+                <address-family>
+                    <ipv4>
+                        <route-target>
+                            <export>
+                                <asn-ip>100:100</asn-ip>
+                            </export>
+                            <import>
+                                <asn-ip>100:100</asn-ip>
+                            </import>
+                        </route-target>
+                    </ipv4>
+                </address-family>
+            </definition>
+        </vrf>
+        <interface>
+            <GigabitEthernet>
+                <name>3</name>
+                <shutdown operation="delete"/>
+                <vrf>
+                    <forwarding>SethCo</forwarding>
+                </vrf>
+                <ip>
+                    <address>
+                        <primary>
+                            <address>10.0.0.1</address>
+                            <mask>255.255.255.0</mask>
+                        </primary>
+                    </address>
+                </ip>
+                <mop>
+                    <enabled>false</enabled>
+                    <sysid>false</sysid>
+                </mop>
+                <negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
+                    <auto>true</auto>
+                </negotiation>
+            </GigabitEthernet>
+        </interface>
+        <router>
+            <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+                <id>1</id>
+                <address-family>
+                    <with-vrf>
+                        <ipv4>
+                            <af-name>unicast</af-name>
+                            <vrf>
+                                <name>SethCo</name>
+                                <ipv4-unicast>
+                                    <network>
+                                        <with-mask>
+                                            <number>10.20.1.0</number>
+                                            <mask>255.255.255.0</mask>
+                                        </with-mask>
+                                    </network>
+                                </ipv4-unicast>
+                            </vrf>
+                        </ipv4>
+                    </with-vrf>
+                </address-family>
+            </bgp>
+        </router>
+    </native>
+</config>
